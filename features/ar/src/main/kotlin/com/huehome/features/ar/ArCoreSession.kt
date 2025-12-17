@@ -146,8 +146,7 @@ class ArCoreSession @Inject constructor() : ArSession {
             val lightEstimate = frame.lightEstimate
             
             LightEstimate(
-                pixelIntensity = lightEstimate.pixelIntensity,
-                colorCorrection = lightEstimate.colorCorrection
+                pixelIntensity = lightEstimate.pixelIntensity
             )
         } catch (e: Exception) {
             LightEstimate(0.5f)
