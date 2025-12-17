@@ -27,6 +27,24 @@ android {
         
         // ARCore configuration
         manifestPlaceholders["AR_REQUIRED"] = "true"
+        
+        // 16 KB page size support for Android 15+ (required by Google Play from Nov 2025)
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
+        }
+    }
+    
+    // Enable 16 KB page alignment
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Exclude duplicate files from OpenCV
+            pickFirsts += "lib/*/libopencv_java4.so"
+        }
     }
 
     buildTypes {
@@ -63,14 +81,7 @@ android {
         compose = true
         buildConfig = true
     }
-    
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            // Exclude duplicate files from OpenCV
-            pickFirsts += "lib/*/libopencv_java4.so"
-        }
-    }
+
 }
 
 dependencies {
@@ -88,6 +99,7 @@ dependencies {
     implementation(Dependencies.composeActivity)
     implementation(Dependencies.composeNavigation)
     implementation(Dependencies.composeLifecycle)
+    implementation("androidx.compose.material:material-icons-extended:1.7.6")
     
     // Hilt
     implementation(Dependencies.hilt)

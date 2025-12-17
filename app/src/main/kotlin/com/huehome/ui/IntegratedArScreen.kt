@@ -14,15 +14,36 @@ import androidx.lifecycle.Lifecycle
 import com.huehome.features.ar.ArCameraView
 import com.huehome.ui.color.ColorPaletteBottomSheet
 import com.huehome.ui.selection.ObjectSelectionBottomSheet
+import com.huehome.features.ar.ArViewModel
+import com.huehome.features.detection.DetectionViewModel
+import com.huehome.ui.color.ColorPaletteViewModel
+import com.huehome.ui.selection.ObjectSelectionViewModel
+import com.huehome.features.rendering.RenderingViewModel
 
 /**
  * Integrated AR screen with all features
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IntegratedArScreen(
-    viewModel: IntegratedViewModel = hiltViewModel()
-) {
+fun IntegratedArScreen() {
+    // Get individual ViewModels from Hilt
+    val arViewModel: ArViewModel = hiltViewModel()
+    val detectionViewModel: DetectionViewModel = hiltViewModel()
+    val colorPaletteViewModel: ColorPaletteViewModel = hiltViewModel()
+    val objectSelectionViewModel: ObjectSelectionViewModel = hiltViewModel()
+    val renderingViewModel: RenderingViewModel = hiltViewModel()
+    
+    // Manually create IntegratedViewModel
+    val viewModel = remember {
+        IntegratedViewModel(
+            arViewModel = arViewModel,
+            detectionViewModel = detectionViewModel,
+            colorPaletteViewModel = colorPaletteViewModel,
+            objectSelectionViewModel = objectSelectionViewModel,
+            renderingViewModel = renderingViewModel
+        )
+    }
+    
     val context = LocalContext.current
     val appState by viewModel.appState.collectAsState()
     
@@ -34,24 +55,27 @@ fun IntegratedArScreen(
         viewModel.initialize()
     }
     
-    // Handle lifecycle events
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        viewModel.arViewModel.resume()
-    }
-    
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
-        viewModel.arViewModel.pause()
-    }
+    // TODO: Handle lifecycle events when ArViewModel implements resume/pause
+    // LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+    //     viewModel.arViewModel.resume()
+    // }
+    // 
+    // LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+    //     viewModel.arViewModel.pause()
+    // }
     
     Box(modifier = Modifier.fillMaxSize()) {
         // AR Camera View
+        // TODO: Implement ArCameraView with tap listener
         AndroidView(
             factory = { ctx ->
-                ArCameraView(ctx).apply {
-                    setOnTapListener { x, y ->
-                        viewModel.onArTap(x, y)
-                    }
-                }
+                ArCameraView(ctx)
+                // TODO: Add tap listener when ArCameraView supports it
+                // .apply {
+                //     setOnTapListener { x, y ->
+                //         viewModel.onArTap(x, y)
+                //     }
+                // }
             },
             modifier = Modifier.fillMaxSize()
         )

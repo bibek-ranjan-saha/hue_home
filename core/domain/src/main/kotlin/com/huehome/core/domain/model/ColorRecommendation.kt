@@ -21,38 +21,6 @@ data class ColorRecommendation(
 )
 
 /**
- * Categories of color recommendations
- */
-enum class RecommendationCategory {
-    /** Complementary color theory */
-    COMPLEMENTARY,
-    
-    /** Analogous color theory */
-    ANALOGOUS,
-    
-    /** High contrast */
-    CONTRAST,
-    
-    /** Monochromatic variations */
-    MONOCHROMATIC,
-    
-    /** Modern style preset */
-    MODERN,
-    
-    /** Minimal style preset */
-    MINIMAL,
-    
-    /** Warm style preset */
-    WARM,
-    
-    /** Luxury style preset */
-    LUXURY,
-    
-    /** Scandinavian style preset */
-    SCANDINAVIAN
-}
-
-/**
  * AI processing mode selection
  */
 enum class ProcessingMode {
@@ -70,13 +38,16 @@ enum class ProcessingMode {
  * Room context for AI recommendations
  */
 data class RoomContext(
-    /** Estimated room size (small, medium, large) */
-    val roomSize: RoomSize = RoomSize.MEDIUM,
-    
     /** Lighting conditions */
     val lightingIntensity: Float = 0.5f,
     
-    /** Color temperature of lighting (warm/cool) */
+    /** Color temperature of lighting (RGBA) */
+    val lightingColor: FloatArray = floatArrayOf(1f, 1f, 1f, 1f),
+    
+    /** Estimated room size (small, medium, large) */
+    val roomSize: RoomSize = RoomSize.MEDIUM,
+    
+    /** Color temperature (warm/cool) */
     val colorTemperature: Float = 0.5f,
     
     /** Number of detected walls */
@@ -84,7 +55,33 @@ data class RoomContext(
     
     /** Dominant existing colors in the room */
     val existingColors: List<Int> = emptyList()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as RoomContext
+
+        if (lightingIntensity != other.lightingIntensity) return false
+        if (!lightingColor.contentEquals(other.lightingColor)) return false
+        if (roomSize != other.roomSize) return false
+        if (colorTemperature != other.colorTemperature) return false
+        if (wallCount != other.wallCount) return false
+        if (existingColors != other.existingColors) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = lightingIntensity.hashCode()
+        result = 31 * result + lightingColor.contentHashCode()
+        result = 31 * result + roomSize.hashCode()
+        result = 31 * result + colorTemperature.hashCode()
+        result = 31 * result + wallCount
+        result = 31 * result + existingColors.hashCode()
+        return result
+    }
+}
 
 enum class RoomSize {
     SMALL,

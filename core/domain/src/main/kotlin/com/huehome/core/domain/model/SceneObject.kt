@@ -20,14 +20,20 @@ data class SceneObject(
     /** Type of object (wall, door, window, etc.) */
     val type: ObjectType,
     
-    /** Path to stored mask bitmap */
-    val maskPath: String,
+    /** Detected color information with confidence */
+    val detectedColor: ColorInfo,
     
-    /** Original detected color (ARGB Int) */
-    val originalColor: Int,
+    /** Path to stored mask bitmap */
+    val maskPath: String = "",
+    
+    /** Original detected color (ARGB Int) - derived from detectedColor */
+    val originalColor: Int = detectedColor.rgb,
     
     /** Applied color (ARGB Int), null if no color applied */
     val appliedColor: Int? = null,
+    
+    /** User-provided label for this object */
+    val userLabel: String? = null,
     
     /** Whether this object is currently active in the scene */
     val isActive: Boolean = true,
@@ -39,7 +45,7 @@ data class SceneObject(
     val boundingBox: FloatArray = floatArrayOf(0f, 0f, 0f, 0f),
     
     /** Confidence score from segmentation model (0.0 - 1.0) */
-    val confidence: Float = 0f
+    val confidence: Float = detectedColor.confidence
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -49,9 +55,11 @@ data class SceneObject(
 
         if (id != other.id) return false
         if (type != other.type) return false
+        if (detectedColor != other.detectedColor) return false
         if (maskPath != other.maskPath) return false
         if (originalColor != other.originalColor) return false
         if (appliedColor != other.appliedColor) return false
+        if (userLabel != other.userLabel) return false
         if (isActive != other.isActive) return false
         if (timestamp != other.timestamp) return false
         if (!boundingBox.contentEquals(other.boundingBox)) return false
@@ -63,9 +71,11 @@ data class SceneObject(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + type.hashCode()
+        result = 31 * result + detectedColor.hashCode()
         result = 31 * result + maskPath.hashCode()
         result = 31 * result + originalColor
         result = 31 * result + (appliedColor ?: 0)
+        result = 31 * result + (userLabel?.hashCode() ?: 0)
         result = 31 * result + isActive.hashCode()
         result = 31 * result + timestamp.hashCode()
         result = 31 * result + boundingBox.contentHashCode()

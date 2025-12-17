@@ -1,6 +1,5 @@
 package com.huehome.features.rendering
 
-import android.graphics.Bitmap
 import android.opengl.GLES30
 import com.huehome.core.domain.model.LabColor
 import java.nio.ByteBuffer

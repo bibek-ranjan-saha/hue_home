@@ -1,7 +1,6 @@
 package com.huehome.features.color
 
 import com.huehome.core.domain.model.LabColor
-import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 

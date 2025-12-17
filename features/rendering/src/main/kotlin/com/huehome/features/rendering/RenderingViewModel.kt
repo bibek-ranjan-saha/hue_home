@@ -80,7 +80,7 @@ class RenderingViewModel @Inject constructor(
                     renderingEngine.renderColoredObject(
                         texture = frameTexture,
                         mask = maskTexture,
-                        originalColor = sceneObject.detectedColor.lab,
+                        originalColor = LabColor.fromRgb(sceneObject.originalColor),
                         targetColor = targetColor,
                         lightIntensity = lightIntensity,
                         blendFactor = blendFactor
