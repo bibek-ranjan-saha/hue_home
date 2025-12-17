@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HueHome</string>
+    
+    <!-- AR Screen -->
+    <string name="ar_camera_title">HueHome AR</string>
+    <string name="ar_initializing">Initializing AR…</string>
+    <string name="ar_scanning">Scan your room</string>
+    <string name="ar_plane_detected">Surface detected</string>
+    
+    <!-- Object Selection -->
+    <string name="select_object">Select an object</string>
+    <string name="tap_to_select">Tap an object to select</string>
+    <string name="object_wall">Wall</string>
+    <string name="object_door">Door</string>
+    <string name="object_window">Window</string>
+    <string name="object_ceiling">Ceiling</string>
+    <string name="object_floor">Floor</string>
+    
+    <!-- Color Detection -->
+    <string name="detecting_color">Detecting color…</string>
+    <string name="original_color">Original Color</string>
+    <string name="applied_color">Applied Color</string>
+    
+    <!-- AI Recommendations -->
+    <string name="ai_recommendations">AI Recommendations</string>
+    <string name="generating_suggestions">Generating suggestions…</string>
+    <string name="apply_color">Apply</string>
+    <string name="preview_color">Preview</string>
+    
+    <!-- Actions -->
+    <string name="toggle_changes">Toggle Changes</string>
+    <string name="reset_object">Reset</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="save_session">Save</string>
+    <string name="compare_mode">Compare</string>
+    
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="ai_processing_mode">AI Processing Mode</string>
+    <string name="mode_on_device">On-Device Only</string>
+    <string name="mode_cloud">Cloud Mode</string>
+    <string name="mode_hybrid">Hybrid Mode</string>
+    <string name="privacy_consent">Privacy Consent</string>
+    <string name="privacy_message">Cloud mode sends images to our servers for enhanced AI processing. Your images are not stored.</string>
+    
+    <!-- Errors -->
+    <string name="error_arcore_not_supported">ARCore is not supported on this device</string>
+    <string name="error_camera_permission">Camera permission is required</string>
+    <string name="error_segmentation_failed">Object detection failed</string>
+    <string name="error_color_detection_failed">Color detection failed</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    
+    <!-- Permissions -->
+    <string name="permission_camera_rationale">Camera access is required for AR functionality</string>
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_denied">Permission Denied</string>
+</resources>
