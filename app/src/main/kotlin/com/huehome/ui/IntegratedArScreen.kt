@@ -1,6 +1,17 @@
 package com.huehome.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,7 +43,7 @@ fun IntegratedArScreen() {
     val colorPaletteViewModel: ColorPaletteViewModel = hiltViewModel()
     val objectSelectionViewModel: ObjectSelectionViewModel = hiltViewModel()
     val renderingViewModel: RenderingViewModel = hiltViewModel()
-    
+
     // Manually create IntegratedViewModel
     val viewModel = remember {
         IntegratedViewModel(
@@ -43,18 +54,18 @@ fun IntegratedArScreen() {
             renderingViewModel = renderingViewModel
         )
     }
-    
+
     val context = LocalContext.current
     val appState by viewModel.appState.collectAsState()
-    
+
     var showObjectSheet by remember { mutableStateOf(false) }
     var showColorSheet by remember { mutableStateOf(false) }
-    
+
     // Initialize on first composition
     LaunchedEffect(Unit) {
         viewModel.initialize()
     }
-    
+
     // TODO: Handle lifecycle events when ArViewModel implements resume/pause
     // LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
     //     viewModel.arViewModel.resume()
@@ -63,7 +74,7 @@ fun IntegratedArScreen() {
     // LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
     //     viewModel.arViewModel.pause()
     // }
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         // AR Camera View
         // TODO: Implement ArCameraView with tap listener
@@ -79,7 +90,7 @@ fun IntegratedArScreen() {
             },
             modifier = Modifier.fillMaxSize()
         )
-        
+
         // AR Status Overlay
         ArStatusOverlay(
             arState = appState.arState,
@@ -88,7 +99,7 @@ fun IntegratedArScreen() {
                 .align(Alignment.TopCenter)
                 .padding(16.dp)
         )
-        
+
         // Bottom Action Bar
         BottomActionBar(
             onShowObjects = { showObjectSheet = true },
@@ -98,7 +109,7 @@ fun IntegratedArScreen() {
                 .align(Alignment.BottomCenter)
                 .padding(16.dp)
         )
-        
+
         // Object Selection Bottom Sheet
         if (showObjectSheet) {
             ModalBottomSheet(
@@ -238,3 +249,4 @@ private fun BottomActionBar(
         }
     }
 }
+
